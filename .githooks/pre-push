@@ -1,0 +1,18 @@
+#!/bin/sh
+
+root=$(git rev-parse --show-toplevel) || exit 0
+branch=$(git symbolic-ref --quiet --short HEAD) || exit 0
+
+if [ "$branch" != "main" ]; then
+    exit 0
+fi
+
+if ! make -C "$root" ci-dryrun; then
+    cat >&2 <<'EOF'
+
+WARNING: CI dry run failed.
+The push was not blocked. Run `make ci-dryrun` for details.
+EOF
+fi
+
+exit 0

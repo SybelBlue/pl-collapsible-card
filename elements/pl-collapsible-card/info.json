@@ -1,0 +1,8 @@
+{
+  "controller": "pl-collapsible-card.py",
+  "dependencies": {
+    "elementStyles": [
+      "pl-collapsible-card.css"
+    ]
+  }
+}

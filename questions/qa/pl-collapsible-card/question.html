@@ -1,0 +1,66 @@
+<pl-question-panel>
+  <p>
+    This question demonstrates <code>pl-collapsible-card</code>. An ungraded or partly correct card
+    opens when the page renders. A fully correct or read-only card closes after grading. Select any
+    card header to open or close it yourself.
+  </p>
+</pl-question-panel>
+
+<pl-collapsible-card
+  footer="The card tracks single_answer because the input is nested inside it."
+  header="Track one answer automatically"
+  subtitle="Enter the shown answer, then select Save &amp; Grade."
+  title="Basic example"
+>
+  <p>
+    Type <code>ready</code>:
+    {{! Known correct answer for single_answer: ready }}
+    <pl-string-input
+      answers-name="single_answer"
+      aria-label="Basic example answer"
+      display="inline"
+      size="10"
+    ></pl-string-input>.
+  </p>
+</pl-collapsible-card>
+
+<pl-collapsible-card
+  footer="This card closes only after both nested answers are fully correct."
+  header="Track several answers together"
+  subtitle="A partly correct submission keeps this card open."
+  title="Multiple-answer example"
+  width="75%"
+>
+  <p>
+    Type <code>blue</code> in the first box:
+    {{! Known correct answer for first_answer: blue }}
+    <pl-string-input
+      answers-name="first_answer"
+      aria-label="First answer in the multiple-answer example"
+      display="inline"
+      size="10"
+    ></pl-string-input>.
+  </p>
+  <p>
+    Type <code>circle</code> in the second box:
+    {{! Known correct answer for second_answer: circle }}
+    <pl-string-input
+      answers-name="second_answer"
+      aria-label="Second answer in the multiple-answer example"
+      display="inline"
+      size="10"
+    ></pl-string-input>.
+  </p>
+</pl-collapsible-card>
+
+<pl-collapsible-card
+  footer="With no tracked answers, this card closes without a badge after grading."
+  header="Toggle a content-only card"
+  title="No graded content"
+  width="50%"
+>
+  <p>
+    This card has no response elements. Its header still works as a native disclosure control, so it
+    can be toggled without JavaScript.
+  </p>
+</pl-collapsible-card>

@@ -1,0 +1,80 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pl-collapsible-card"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+  "numpy",
+  "sympy==1.14.0",
+  "chevron==0.14.0",
+]
+
+[dependency-groups]
+dev = [
+  "ipython",
+  "jsonschema",
+  "pl-vendor>=0.6.4",
+  "pyright",
+  "ruff",
+  "pl-e2e-test>=0.1.5",
+  "lxml>=6.1.0",
+  "pytest",
+  "rich",
+  "pyfakefs",
+  "prairielearn",
+  "sketchresponse",
+]
+
+[tool.uv.sources.prairielearn]
+git = "https://github.com/PrairieLearn/PrairieLearn.git"
+subdirectory = "apps/prairielearn/python"
+
+[tool.setuptools.packages.find]
+where = ["serverFilesCourse"]
+
+[tool.pyright]
+extraPaths = [".", "serverFilesCourse"]
+reportMissingModuleSource = false
+executionEnvironments = [
+  { root = "questions", reportUnnecessaryTypeIgnoreComment = "error" },
+  { root = "." },
+]
+
+[tool.pl-e2e-test]
+diffignore = [
+  ".agents",
+  ".github",
+  ".githooks",
+  "*.*ignore",
+  ".htmlmustache.jsonc",
+  ".prettierrc.json",
+  ".vscode",
+  "LICENSE",
+  "README.md",
+  "courseInstances",
+  "infoCourse.json",
+  "scripts",
+  "Makefile",
+  "package.json",
+  "pnpm*.yaml",
+  "*lock.yaml",
+  "plvendor.lock",
+]
+
+[tool.pl-vendor]
+schema-version = 1
+
+[tool.pl-vendor.packages.prairielearn-schemas]
+path = ".prairielearn/schemas"
+url = "https://github.com/PrairieLearn/PrairieLearn.git"
+subdirectory = "apps/prairielearn/src/schemas/schemas"
+
+[tool.pl-vendor.packages.prairielearn-htmlmustache]
+path = ".htmlmustache"
+url = "https://github.com/PrairieLearn/PrairieLearn.git"
+branch = "master"
+subdirectory = "apps/prairielearn/src/lib/element-schemas"
+exclude = ["**/*.test.ts"]

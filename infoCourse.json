@@ -1,0 +1,27 @@
+{
+  "name": "PrairieLearn Collapsible Card",
+  "title": "PrairieLearn Collapsible Card",
+  "assessmentSets": [
+    {
+      "abbreviation": "G",
+      "name": "Gallery",
+      "heading": "Element QA Gallery",
+      "color": "orange1"
+    }
+  ],
+  "topics": [
+    {
+      "name": "Element QA",
+      "color": "purple1",
+      "description": "Development and quality-assurance questions for pl-collapsible-card"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Easy",
+      "color": "green1",
+      "description": "Introductory difficulty"
+    }
+  ],
+  "timezone": "America/Los_Angeles"
+}

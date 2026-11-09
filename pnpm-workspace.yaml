@@ -1,0 +1,4 @@
+allowBuilds:
+  '@prairielearn/tree-sitter-htmlmustache': false
+minimumReleaseAgeExclude:
+  - '@sybelblue/prairielearn-navigator@0.3.0 || 0.3.1'

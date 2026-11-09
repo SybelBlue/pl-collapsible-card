@@ -1,0 +1,43 @@
+<details
+  class="card w-{{width}} my-4{{#centered}} mx-auto{{/centered}} pl-collapsible-card"
+  {{#open}} open{{/open}}
+>
+  <summary class="card-header">
+    {{{header}}}
+    {{#score_badge}}
+      {{#correct}}
+        <span class="badge text-bg-success float-end ms-2 pl-collapsible-card__score">
+          <i class="fas fa-check" aria-hidden="true"></i> 100%
+        </span>
+      {{/correct}}
+      {{#partial}}
+        <span class="badge text-bg-warning float-end ms-2 pl-collapsible-card__score">
+          <i class="far fa-circle" aria-hidden="true"></i> {{partial}}%
+        </span>
+      {{/partial}}
+      {{#incorrect}}
+        <span class="badge text-bg-danger float-end ms-2 pl-collapsible-card__score">
+          <i class="fas fa-times" aria-hidden="true"></i> 0%
+        </span>
+      {{/incorrect}}
+    {{/score_badge}}
+  </summary>
+  {{#img-top-src}}
+    <img src="{{img-top-src}}" alt="{{img-top-alt}}" class="card-img-top">
+  {{/img-top-src}}
+  <div class="card-body">
+    {{#title}}
+      <div class="h5 card-title">{{title}}</div>
+    {{/title}}
+    {{#subtitle}}
+      <div class="h6 card-subtitle text-muted mb-2">{{subtitle}}</div>
+    {{/subtitle}}
+    {{{content}}}
+  </div>
+  {{#img-bottom-src}}
+    <img src="{{img-bottom-src}}" alt="{{img-bottom-alt}}" class="card-img-bottom">
+  {{/img-bottom-src}}
+  {{#footer}}
+    <div class="card-footer">{{{footer}}}</div>
+  {{/footer}}
+</details>

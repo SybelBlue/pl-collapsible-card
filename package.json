@@ -1,0 +1,20 @@
+{
+  "type": "module",
+  "engines": {
+    "pnpm": "^11.19.0"
+  },
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.19.0",
+      "onFail": "warn"
+    }
+  },
+  "devDependencies": {
+    "@prairielearn/tree-sitter-htmlmustache": "1.4.3",
+    "@sybelblue/prairielearn-navigator": "^0.3.1",
+    "prettier": "^3.9.6",
+    "prettier-plugin-mustache": "^0.1.6",
+    "prettier-plugin-organize-attributes": "^1.0.0"
+  }
+}

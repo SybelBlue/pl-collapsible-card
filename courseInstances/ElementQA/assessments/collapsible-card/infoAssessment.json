@@ -1,0 +1,20 @@
+{
+  "uuid": "f30fc419-86cf-4f5a-b5be-d6d41216b71c",
+  "type": "Homework",
+  "title": "Collapsible Card QA",
+  "set": "Gallery",
+  "module": "Element QA",
+  "allowAccess": [],
+  "number": "1",
+  "zones": [
+    {
+      "questions": [
+        {
+          "id": "qa/pl-collapsible-card",
+          "points": 1
+        }
+      ]
+    }
+  ],
+  "shareSourcePublicly": true
+}

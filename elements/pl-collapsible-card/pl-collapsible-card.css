@@ -1,0 +1,8 @@
+.pl-collapsible-card > summary.card-header {
+  cursor: pointer;
+}
+
+.pl-collapsible-card > summary.card-header:focus-visible {
+  outline: 0.25rem solid rgba(13, 110, 253, 0.25);
+  outline-offset: -0.125rem;
+}
