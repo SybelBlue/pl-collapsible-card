@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "centered": {
+      "default": "true",
+      "type": "string",
+      "format": "boolean"
+    },
+    "footer": {
+      "type": "string"
+    },
+    "header": {
+      "type": "string",
+      "minLength": 1
+    },
+    "img-bottom-alt": {
+      "type": "string"
+    },
+    "img-bottom-src": {
+      "type": "string"
+    },
+    "img-top-alt": {
+      "type": "string"
+    },
+    "img-top-src": {
+      "type": "string"
+    },
+    "include-in-correct-panel": {
+      "default": "auto",
+      "type": "string",
+      "anyOf": [
+        {
+          "format": "boolean"
+        },
+        {
+          "enum": ["auto"]
+        }
+      ]
+    },
+    "include-in-submission-panel": {
+      "default": "auto",
+      "type": "string",
+      "anyOf": [
+        {
+          "format": "boolean"
+        },
+        {
+          "enum": ["auto"]
+        }
+      ]
+    },
+    "score-names": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "width": {
+      "default": "auto",
+      "type": "string",
+      "enum": [
+        "25%",
+        "50%",
+        "75%",
+        "auto"
+      ]
+    }
+  },
+  "required": ["header"],
+  "additionalProperties": false
+}
