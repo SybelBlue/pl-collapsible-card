@@ -22,7 +22,7 @@ reload.
 ## Install in a PrairieLearn course
 
 Vendor the generated `release` branch at `elements/pl-collapsible-card`. With
-`pl-vendor`, configure the package to use:
+[`pl-vendor`](https://pypi.org/project/pl-vendor/), configure the package to use:
 
 ```toml
 [tool.pl-vendor.packages.pl-collapsible-card]
