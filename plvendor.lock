@@ -2,8 +2,8 @@ version = 4
 
 [[package]]
 name = "prairielearn-schemas"
-revision = "076bf1bf7b4dc67a401ab7b1169c41ddf7d50002"
+revision = "32b38b1a0ab41df1466e6c4bd7ce1e5674eb2ffe"
 
 [[package]]
 name = "prairielearn-htmlmustache"
-revision = "076bf1bf7b4dc67a401ab7b1169c41ddf7d50002"
+revision = "32b38b1a0ab41df1466e6c4bd7ce1e5674eb2ffe"
