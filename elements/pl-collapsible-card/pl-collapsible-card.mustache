@@ -40,4 +40,11 @@
   {{#footer}}
     <div class="card-footer">{{{footer}}}</div>
   {{/footer}}
+  {{#question}}
+    <script>
+      window.PLCollapsibleCard(
+        document.currentScript.closest(".pl-collapsible-card"),
+      );
+    </script>
+  {{/question}}
 </details>

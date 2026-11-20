@@ -1,13 +1,13 @@
 # `pl-collapsible-card`
 
 `pl-collapsible-card` presents PrairieLearn content in a Bootstrap card whose
-header is a native HTML disclosure control. The card is open before grading and
-whenever any answer it tracks is not fully correct. It is closed after every
-tracked answer receives a score of `1.0`. Once every tracked answer has a score,
-the header displays their weighted aggregate using PrairieLearn's standard
-red, yellow, and green score badge. A read-only card with no tracked answers
-also starts open, then closes without a badge after the first valid grading
-reload.
+header is a native HTML disclosure control. On the first render of a variant in
+a browser tab, the card is open before grading and whenever any answer it tracks
+is not fully correct. It is closed after every tracked answer receives a score
+of `1.0`. The question panel then remembers the student's exact open or closed
+state across submissions and reloads for that variant and tab. Once every
+tracked answer has a score, the header displays their weighted aggregate using
+PrairieLearn's standard red, yellow, and green score badge.
 
 ```html
 <pl-collapsible-card header="Part 1" title="Set up the integral" width="75%">
@@ -77,12 +77,21 @@ Without `score-names`, the element tracks every descendant `answers-name`.
 With `score-names`, it tracks exactly the listed names, which supports custom
 graders that do not expose `answers-name` in their markup.
 
-Before grading, the card opens when there are no tracked names, a tracked score
-is absent, or a tracked score is not fully correct. A grading render closes a
-read-only card after the first valid submission. A card with tracked answers
-closes only when every tracked name has a score numerically equal to `1.0`. The
-browser owns the open/closed state between renders, so multiple cards on one
-page toggle independently without JavaScript or shared IDs.
+When no state has been stored in the browser, the card opens when there are no
+tracked names, a tracked score is absent, or a tracked score is not fully
+correct. A server render closes a read-only card after the first valid
+submission. A card with tracked answers closes only when every tracked name has
+a score numerically equal to `1.0`.
+
+In the live question panel, the element stores each card's state in
+`sessionStorage`, scoped to the PrairieLearn variant. It captures every card
+when the question form is submitted and updates the stored value whenever a
+card is toggled. On later renders, the student's stored state takes precedence
+over the score-based default, while score badges continue to update. A new
+variant or browser-tab session starts from the server-rendered default. If
+browser storage is unavailable or invalid, the element safely falls back to
+that default. Submission-history and correct-answer panels do not restore this
+question-panel state.
 
 When all tracked scores are available, the header badge displays
 `sum(score * weight) / sum(weight)`, with a missing weight treated as `1`.
