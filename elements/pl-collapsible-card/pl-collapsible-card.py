@@ -228,6 +228,7 @@ def render(element_html: str, data: pl.QuestionData) -> str:
         "width": "100" if width == "auto" else width.removesuffix("%"),
         "centered": centered and width != "auto",
         "content": pl.inner_html(element),
+        "question": panel == "question",
         "open": is_correct_panel
         or _should_open(score_names, partial_scores, was_graded),
         "score_badge": (

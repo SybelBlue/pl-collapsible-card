@@ -32,6 +32,7 @@ IGNORED_ELEMENTS :=
 
 PRETTIER_EXCLUDES = $(foreach element,$(IGNORED_ELEMENTS),"!$(element)/**")
 JSON_PATHS := "infoCourse.json" "{.vscode,courseInstances,elements,questions}/**/*.{json,jsonc}"
+JS_PATHS := "elements/**/*.js"
 FORMAT_MODE = $(if $(filter check-format-%,$@),--check,--write)
 REQUIRED_VENDOR_PACKAGES := prairielearn-schemas prairielearn-htmlmustache
 
@@ -44,9 +45,9 @@ export DOCKER_JOBS_DIR
 .PHONY: deps deps-install venv install-hooks refresh-git-hooks clean-git-hooks
 .PHONY: vendor-update-all vendor-update-required vendor-check-upstream vendor-check-required vendor-check-prairielearn vendor-verify
 .PHONY: update-vendored check-vendored verify-vendored
-.PHONY: test test-helpers test-e2e test-e2e-sharded test-e2e-fuzz test-e2e-fuzz-diff-only test-e2e-fuzz-sharded test-content add-e2e-regression-seed
+.PHONY: test test-helpers test-js test-e2e test-e2e-sharded test-e2e-fuzz test-e2e-fuzz-diff-only test-e2e-fuzz-sharded test-content add-e2e-regression-seed
 .PHONY: validate validate-json validate-htmlmustache check-navigator typecheck
-.PHONY: format format-py format-json format-html check-format check-format-py check-format-json check-format-html
+.PHONY: format format-py format-js format-json format-html check-format check-format-py check-format-js check-format-json check-format-html
 .PHONY: check ci-dryrun ci-run ci-retry ci-watch release-dry-run release release-push dev docker clean clean-python clean-js clean-docker
 
 # install deps, RUN ME FIRST
@@ -97,10 +98,13 @@ add-e2e-regression-seed:
 	@$(UV_RUN) pl-e2e-test add-seed \
 		"$(QUESTION_PATH)" "$(VARIANT_SEED)"
 
-test: test-helpers test-e2e-sharded test-e2e-fuzz-sharded
+test: test-helpers test-js test-e2e-sharded test-e2e-fuzz-sharded
 
 test-helpers:
 	@$(UV_RUN) pytest $(LIB_TEST_PATHS) $(PYTEST_ARGS)
+
+test-js:
+	@node --test elements/pl-collapsible-card/tests/*.test.js
 
 test-e2e test-e2e-sharded: E2E_MODE = run
 test-e2e test-e2e-sharded: E2E_SUITE_ARGS = $(E2E_RUN_ARGS)
@@ -168,13 +172,16 @@ typecheck:
 
 
 # format source
-format: format-py format-json format-html
+format: format-py format-js format-json format-html
 
-check-format: check-format-py check-format-json check-format-html
+check-format: check-format-py check-format-js check-format-json check-format-html
 
 format-py check-format-py:
 	@$(UV_RUN) ruff format $(if $(filter check-format-%,$@),--check) \
 		$(foreach element,$(IGNORED_ELEMENTS),--extend-exclude $(element)) .
+
+format-js check-format-js:
+	@pnpm exec prettier $(FORMAT_MODE) $(JS_PATHS) $(PRETTIER_EXCLUDES)
 
 format-json check-format-json:
 	@pnpm exec prettier $(FORMAT_MODE) $(JSON_PATHS) $(PRETTIER_EXCLUDES)

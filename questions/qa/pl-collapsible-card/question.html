@@ -1,16 +1,16 @@
 <pl-question-panel>
   <p>
-    This question demonstrates <code>pl-collapsible-card</code>. An ungraded or partly correct card
-    opens when the page renders. A fully correct or read-only card closes after grading. Select any
-    card header to open or close it yourself.
+    This question demonstrates <code>pl-collapsible-card</code>. Select any card header to open or
+    close it, then select Save &amp; Grade. The cards retain their states across grading and page
+    reloads for this variant in this browser tab.
   </p>
 </pl-question-panel>
 
 <pl-collapsible-card
-  footer="The card tracks single_answer because the input is nested inside it."
-  header="Track one answer automatically"
-  subtitle="Enter the shown answer, then select Save &amp; Grade."
-  title="Basic example"
+  footer="This optional intermediate has weight 0, so it does not affect the question score."
+  header="Try an optional intermediate"
+  subtitle="Open or close this card before selecting Save &amp; Grade."
+  title="Zero-weight debugging step"
 >
   <p>
     Type <code>ready</code>:

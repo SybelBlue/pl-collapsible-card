@@ -217,6 +217,22 @@ class TestCardRendering:
         assert image.get("src") == 'image.png?x=1&label="test"'
         assert image.get("alt") == 'A "quoted" image'
 
+    def test_question_panel_initializes_browser_state_persistence(self) -> None:
+        details = rendered_element(markup())
+
+        scripts = details.xpath("./script")
+        assert len(scripts) == 1
+        assert "window.PLCollapsibleCard" in scripts[0].text_content()
+
+    @pytest.mark.parametrize("panel", ["answer", "submission"])
+    def test_result_panels_do_not_initialize_browser_state_persistence(
+        self, panel: Literal["answer", "submission"]
+    ) -> None:
+        source = markup('<pl-integer-input answers-name="a"></pl-integer-input>')
+        details = rendered_element(source, {"a": {"score": 1.0}}, panel=panel)
+
+        assert not details.xpath("./script")
+
     @pytest.mark.parametrize("panel", ["question", "submission"])
     def test_score_driven_open_state_applies_outside_correct_panel(
         self, panel: Literal["question", "submission"]

@@ -7,3 +7,7 @@ def generate(data: pl.QuestionData) -> None:
         "first_answer": "blue",
         "second_answer": "circle",
     }
+
+
+def grade(data: pl.QuestionData) -> None:
+    data["partial_scores"]["single_answer"]["weight"] = 0
