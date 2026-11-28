@@ -41,19 +41,8 @@ jobs:
           enable-cache: true
           cache-dependency-glob: uv.lock
 
-      - name: Set up pnpm
-        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
-        with:
-          version: 11.20.0
-
-      - name: Set up Node
-        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
-        with:
-          node-version: '24'
-          cache: pnpm
-
-      - name: Install dependencies
-        run: make deps-install
+      - name: Install Python dependencies
+        run: uv sync --locked
 
       - name: Check required vendor freshness
         id: freshness
@@ -70,7 +59,6 @@ jobs:
         run: |
           old_revision=$(uv run --locked --no-sync pl-vendor list prairielearn-schemas | awk 'NR == 1 {print $2}')
           make vendor-update-required
-          make vendor-verify
           new_revision=$(uv run --locked --no-sync pl-vendor list prairielearn-schemas | awk 'NR == 1 {print $2}')
           if [ -z "$old_revision" ] || [ -z "$new_revision" ]; then
             echo "Could not read the required PrairieLearn revisions." >&2
@@ -82,14 +70,6 @@ jobs:
           fi
           echo "old_revision=$old_revision" >> "$GITHUB_OUTPUT"
           echo "new_revision=$new_revision" >> "$GITHUB_OUTPUT"
-
-      - name: Run checks
-        if: steps.freshness.outputs.update == 'true'
-        env:
-          E2E_DIFF_BASE: main
-          E2E_DIFF_HEAD: HEAD
-          E2E_FUZZ_SEED: ${{ github.run_id }}
-        run: make check
 
       - name: Commit and push update
         if: steps.freshness.outputs.update == 'true'
@@ -117,7 +97,7 @@ jobs:
             printf 'Updates the required PrairieLearn-derived vendor group.\n\n'
             printf -- "- Previous PrairieLearn revision: \`%s\`\n" "$OLD_REVISION"
             printf -- "- New PrairieLearn revision: \`%s\`\n\n" "$NEW_REVISION"
-            printf "The update workflow ran \`make vendor-verify\` and \`make check\` before pushing.\n\n"
+            printf 'CI runs vendored-package verification and the full check suite after this pull request is opened. Review the check results before merging.\n\n'
             printf "\`\`\`text\n"
             git diff --stat main...HEAD
             printf "\`\`\`\n"
@@ -144,7 +124,11 @@ jobs:
 
           echo "number=$pull_request" >> "$GITHUB_OUTPUT"
 
-          # Pushes made with GITHUB_TOKEN do not emit a pull_request event. Dispatch
-          # the ordinary CI workflow explicitly so its Checks result is attached to
-          # the update commit and can satisfy branch protection.
+      - name: Run CI on the update pull request
+        if: steps.freshness.outputs.update == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        # Dispatch CI after opening the PR so failed checks cannot prevent creation.
+        # Explicit dispatch also avoids approval for GITHUB_TOKEN-triggered PR runs.
+        run: |
           gh workflow run CI --ref "$UPDATE_BRANCH"
